@@ -39,7 +39,7 @@ steps{
   echo"Start Emulator"
 
   // Start the Android Emulator
-  bat "\"${env.ANDROID_HOME}/emulator/emulator\" -avd Pixel_3a_API_33_x86_64 -no-window -gpu host"
+  bat "\"${env.ANDROID_HOME}/emulator/emulator\" -avd Pixel_3a_API_33_x86_64 -no-window -gpu host -no-snapshot"
 
   // Wait for emulator to start
   bat "\"${env.ANDROID_HOME}/platform-tools/adb\" wait-for-device shell 'while [[ -z \$(getprop sys.boot_completed) ]]; do sleep 1; done;'"
