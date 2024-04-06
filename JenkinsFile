@@ -37,11 +37,20 @@ steps {
 stage('Start Emulator'){
 steps{
   echo"Start Emulator"
+
   // Start the Android Emulator
-  bat "\"${env.ANDROID_HOME}/emulator/emulator\" -avd Pixel_3a_API_33_x86_64 -no-window"
+  bat "\"${env.ANDROID_HOME}/emulator/emulator\" -avd Pixel_3a_API_33_x86_64 -no-window -gpu host"
+
   // Wait for emulator to start
-  bat 'adb wait-for-device shell "while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;"'
+  bat "\"${env.ANDROID_HOME}/platform-tools/adb\" wait-for-device shell 'while [[ -z \$(getprop sys.boot_completed) ]]; do sleep 1; done;'"
+
+  // Add a delay after starting the emulator
+  bat "timeout /t 30"  // 30 seconds delay
 }
+
+environment {
+        ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL = '120'  // 2 minutes
+    }
 }
 
 stage('Run UI Tests') {
