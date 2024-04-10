@@ -1,23 +1,17 @@
 package com.asmaa.composeapp
 
 import androidx.compose.foundation.layout.padding
-import com.asmaa.composeapp.ui.screens.SplashScreen
-import com.asmaa.composeapp.ui.screens.InviteScreen
-import com.asmaa.composeapp.ui.screens.InviteCancelScreen
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
 import com.asmaa.composeapp.ui.InviteViewModel
+import com.asmaa.composeapp.ui.screens.InviteCancelScreen
+import com.asmaa.composeapp.ui.screens.InviteScreen
+import com.asmaa.composeapp.ui.screens.SplashScreen
 
 enum class ComposeAppScreen {
     SPLASHSCREEN,
