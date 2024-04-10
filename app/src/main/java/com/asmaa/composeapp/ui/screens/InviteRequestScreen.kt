@@ -29,6 +29,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.asmaa.composeapp.ui.InviteViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -142,6 +143,6 @@ fun InviteScreen(inviteViewModel: InviteViewModel, navigateToNextScreen: () -> U
 @Preview
 @Composable
 fun InviteScreenPreview() {
-    //InviteScreen {
-    //  }
+    val viewModel: InviteViewModel = viewModel()
+    InviteScreen(inviteViewModel = viewModel) {}
 }

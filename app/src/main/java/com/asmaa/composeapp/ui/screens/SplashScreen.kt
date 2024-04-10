@@ -67,9 +67,7 @@ fun SplashScreen(navigateToNextScreen: () -> Unit) {
                 color = Color.Black,
             )
         }
-
     }
-
 }
 
 @Preview

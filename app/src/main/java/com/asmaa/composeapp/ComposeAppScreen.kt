@@ -26,17 +26,6 @@ enum class ComposeAppScreen {
 }
 
 @Composable
-inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(
-    navController: NavController,
-): T {
-    val navGraphRoute = destination.parent?.route ?: return viewModel()
-    val parentEntry = remember(this) {
-        navController.getBackStackEntry(navGraphRoute)
-    }
-    return viewModel(parentEntry)
-}
-
-@Composable
 fun ComposeApp(navController: NavHostController = rememberNavController()) {
     val inviteViewModel: InviteViewModel = hiltViewModel()
     NavHost(
