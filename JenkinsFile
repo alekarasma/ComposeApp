@@ -1,0 +1,81 @@
+pipeline {
+agent any
+
+environment {
+// Define the environment variables
+ANDROID_HOME = "C:/Users/surface pro 7/AppData/Local/Android/Sdk"
+PATH = "${env.ANDROID_HOME}/platform-tools:${env.ANDROID_HOME}/tools:${env.PATH}"
+}
+
+stages {
+stage('Checkout') {
+steps {
+// Checks out the project from a source control management
+checkout scm
+}
+}
+
+stage('Prepare') {
+steps {
+echo"Running preparation step"
+echo "${env.ANDROID_HOME}/tools/bin/sdkmanager"
+//sh "yes | ${env.ANDROID_HOME}/tools/bin/sdkmanager --licenses"
+
+}
+}
+
+stage('Build APK') {
+steps {
+// Clean and build the project. Adjust the gradle path if necessary.
+  echo"Build APK"
+//sh './gradlew clean assembleDebug'
+  bat "./gradlew clean assembleDebug"
+
+}
+}
+
+stage('Start Emulator'){
+steps{
+  echo"Start Emulator"
+
+  // Start the Android Emulator
+  bat "\"${env.ANDROID_HOME}/emulator/emulator\" -avd Pixel_3a_API_33_x86_64 -no-window -gpu host -no-snapshot"
+
+  // Wait for emulator to start
+  bat "\"${env.ANDROID_HOME}/platform-tools/adb\" wait-for-device shell 'while [[ -z \$(getprop sys.boot_completed) ]]; do sleep 1; done;'"
+
+  // Add a delay after starting the emulator
+  bat "timeout /t 30"  // 30 seconds delay
+}
+
+environment {
+        ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL = '120'  // 2 minutes
+    }
+}
+
+stage('Run UI Tests') {
+steps {
+  echo"Run UI Tests"
+  bat "./gradlew connectedAndroidTest"
+}
+}
+
+stage('Archive APK') {
+steps {
+// Archives the APK
+archiveArtifacts artifacts: 'app/build/outputs/apk/debug/*.apk', fingerprint: true
+}
+}
+}
+
+post {
+success {
+// Actions to take if the pipeline succeeds
+echo 'Build succeeded'
+}
+failure {
+// Actions to take if the pipeline fails
+echo 'Build failed'
+}
+}
+}
