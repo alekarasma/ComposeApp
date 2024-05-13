@@ -6,6 +6,7 @@ import com.asmaa.composeapp.model.InviteResponse
 import com.asmaa.composeapp.model.RegisteredUsers
 import com.asmaa.composeapp.model.UserAccountDetails
 import retrofit2.HttpException
+import retrofit2.Response
 import retrofit2.http.HTTP
 import java.lang.Exception
 import javax.inject.Inject
@@ -16,10 +17,10 @@ class RemoteRepository @Inject constructor(private val apiService: LoginApiServi
         Log.e("TAG", "Send Invite")
         try {
             val response = apiService.successfulInvite(user)
-            if (response.isSuccessful) {
-                return ApiResponse.Success(response.body()!!)
+            return if (response.isSuccessful) {
+                ApiResponse.Success(response.body()!!)
             } else {
-                return ApiResponse.Failure(HttpException(response).message())
+                ApiResponse.Failure(HttpException(response).message())
             }
         } catch (e: Exception) {
             Log.e("TAG", "Exception sending request: $e")
@@ -27,18 +28,27 @@ class RemoteRepository @Inject constructor(private val apiService: LoginApiServi
         }
     }
 
-
     suspend fun listRegisteredUser(page: String): ApiResponse<RegisteredUsers> {
         return try {
-            apiService.listRegisteredUsers(page)
+            val response = apiService.listRegisteredUsers()
+            return if (response.isSuccessful) {
+                ApiResponse.Success(response.body()!!)
+            } else {
+                ApiResponse.Failure(HttpException(response).message())
+            }
         } catch (e: Exception) {
             ApiResponse.Failure(e.message ?: "Unknown Error")
         }
     }
 
-    suspend fun sendUnSuccessfulInvite(email: String): ApiResponse<InviteResponse> {
+    suspend fun sendUnSuccessfulInvite(email: String): ApiResponse<String> {
         return try {
-            apiService.unSuccessfulInvite(email)
+            val response = apiService.unSuccessfulInvite(email)
+            return if (response.isSuccessful) {
+                ApiResponse.Success(response.body()!!)
+            } else {
+                ApiResponse.Failure(HttpException(response).message())
+            }
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string() ?: "Unknown Error"
             Log.e("TAG", "HTTP Exception: $errorBody")

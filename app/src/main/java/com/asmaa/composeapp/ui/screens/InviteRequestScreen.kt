@@ -36,9 +36,8 @@ import com.asmaa.composeapp.ui.InviteViewModel
 @Composable
 fun InviteScreen(inviteViewModel: InviteViewModel, navigateToNextScreen: () -> Unit) {
 
-
-    // we used rememberSaveable to retain the state across configuration changes, such as device rotation or when the app goes into the background,
-    // we want to preserve error state
+    // We used rememberSaveable to retain the state across configuration changes, such as device rotation or when the app goes into the background,
+    // We want to preserve error state
     var isError by rememberSaveable { mutableStateOf(false) }
 
     val inviteStatus by inviteViewModel.inviteStatus.observeAsState()
@@ -46,7 +45,7 @@ fun InviteScreen(inviteViewModel: InviteViewModel, navigateToNextScreen: () -> U
     LaunchedEffect(inviteStatus) { // Observe inviteStatus.value
         when (inviteStatus) { // Access value property
             is InviteViewModel.InviteStatus.Success -> {
-                navigateToNextScreen() // Invoke the lambda to navigate
+                navigateToNextScreen()
             }
 
             is InviteViewModel.InviteStatus.Failure -> {
@@ -62,8 +61,7 @@ fun InviteScreen(inviteViewModel: InviteViewModel, navigateToNextScreen: () -> U
     isError =
         inviteViewModel.confirmPassword.length > 5 && inviteViewModel.password != inviteViewModel.confirmPassword
 
-
-    // If already log in , display a message- already signed up
+    // If already log in , display a message- already signed up and go to Invite Cancel Screen
     if (inviteViewModel.userLoggedIn) {
 
     } else {
@@ -132,13 +130,12 @@ fun InviteScreen(inviteViewModel: InviteViewModel, navigateToNextScreen: () -> U
                 OutlinedButton(enabled = !isError, onClick = {
                     inviteViewModel.requestInviteFromCompany()
                 }) {
-                    Text(text = "Sign up")
+                    Text(text = "Sign Up")
                 }
             }
         }
     }
 }
-
 
 @Preview
 @Composable

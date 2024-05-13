@@ -11,12 +11,14 @@ import androidx.navigation.compose.rememberNavController
 import com.asmaa.composeapp.ui.InviteViewModel
 import com.asmaa.composeapp.ui.screens.InviteCancelScreen
 import com.asmaa.composeapp.ui.screens.InviteScreen
+import com.asmaa.composeapp.ui.screens.ListUserScreen
 import com.asmaa.composeapp.ui.screens.SplashScreen
 
 enum class ComposeAppScreen {
     SPLASHSCREEN,
     INVITE_REQUEST,
-    INVITE_CANCEL
+    INVITE_CANCEL,
+    LIST_USERS
 }
 
 @Composable
@@ -44,10 +46,17 @@ fun ComposeApp(navController: NavHostController = rememberNavController()) {
         }
 
         composable(ComposeAppScreen.INVITE_CANCEL.name) {
-            InviteCancelScreen(inviteViewModel) {
-                navController.navigate(
-                    ComposeAppScreen.INVITE_REQUEST.name
-                )
+            InviteCancelScreen(inviteViewModel,
+                { navController.popBackStack() }, {
+                    navController.navigate(
+                        ComposeAppScreen.LIST_USERS.name
+                    )
+                })
+
+        }
+        composable(ComposeAppScreen.LIST_USERS.name) {
+            ListUserScreen(inviteViewModel) {
+                navController.popBackStack()
             }
         }
     }

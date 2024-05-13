@@ -1,8 +1,6 @@
 package com.asmaa.composeapp.data
 
 import android.util.Log
-import androidx.datastore.preferences.protobuf.Api
-import com.asmaa.composeapp.model.Email
 import com.asmaa.composeapp.model.InviteResponse
 import com.asmaa.composeapp.model.RegisteredUsers
 import com.asmaa.composeapp.model.User
@@ -24,7 +22,6 @@ class LoginRepositoryImpl @Inject constructor(
     }
 
     override suspend fun listRegisteredUser(page: String): ApiResponse<RegisteredUsers> {
-        Log.i(TAG, "List Registered User")
         return remoteRepository.listRegisteredUser(page)
     }
 
@@ -33,7 +30,7 @@ class LoginRepositoryImpl @Inject constructor(
         //localRepository.isUserLoggedIn()
     }
 
-    override suspend fun sendUnSuccessfulInvite(user: User): ApiResponse<InviteResponse> {
+    override suspend fun sendUnSuccessfulInvite(user: User): ApiResponse<String> {
         return remoteRepository.sendUnSuccessfulInvite(user.email)
     }
 
@@ -49,6 +46,5 @@ interface LoginRepository {
     suspend fun listRegisteredUser(page: String): ApiResponse<RegisteredUsers>
 
     suspend fun isUserLoggedIn()
-
-    suspend fun sendUnSuccessfulInvite(user: User): ApiResponse<InviteResponse>
+    suspend fun sendUnSuccessfulInvite(user: User): ApiResponse<String>
 }
