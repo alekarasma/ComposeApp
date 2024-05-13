@@ -1,13 +1,10 @@
 package com.asmaa.composeapp.data
 
 import android.util.Log
-import androidx.datastore.preferences.protobuf.Api
 import com.asmaa.composeapp.model.InviteResponse
-import com.asmaa.composeapp.model.RegisteredUsers
+import com.asmaa.composeapp.model.RegisteredResources
 import com.asmaa.composeapp.model.UserAccountDetails
 import retrofit2.HttpException
-import retrofit2.Response
-import retrofit2.http.HTTP
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -28,9 +25,9 @@ class RemoteRepository @Inject constructor(private val apiService: LoginApiServi
         }
     }
 
-    suspend fun listRegisteredUser(page: String): ApiResponse<RegisteredUsers> {
+    suspend fun listRegisteredUser(page: String): ApiResponse<RegisteredResources> {
         return try {
-            val response = apiService.listRegisteredUsers()
+            val response = apiService.listResources()
             return if (response.isSuccessful) {
                 ApiResponse.Success(response.body()!!)
             } else {

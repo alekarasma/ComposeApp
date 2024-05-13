@@ -2,7 +2,7 @@ package com.asmaa.composeapp.data
 
 import android.util.Log
 import com.asmaa.composeapp.model.InviteResponse
-import com.asmaa.composeapp.model.RegisteredUsers
+import com.asmaa.composeapp.model.RegisteredResources
 import com.asmaa.composeapp.model.User
 import com.asmaa.composeapp.model.UserAccountDetails
 import javax.inject.Inject
@@ -21,7 +21,7 @@ class LoginRepositoryImpl @Inject constructor(
         return remoteRepository.sendSuccessfulInvite(userAccountDetails)
     }
 
-    override suspend fun listRegisteredUser(page: String): ApiResponse<RegisteredUsers> {
+    override suspend fun listRegisteredUser(page: String): ApiResponse<RegisteredResources> {
         return remoteRepository.listRegisteredUser(page)
     }
 
@@ -43,7 +43,7 @@ interface LoginRepository {
 
     suspend fun requestInvite(user: User): ApiResponse<InviteResponse>
 
-    suspend fun listRegisteredUser(page: String): ApiResponse<RegisteredUsers>
+    suspend fun listRegisteredUser(page: String): ApiResponse<RegisteredResources>
 
     suspend fun isUserLoggedIn()
     suspend fun sendUnSuccessfulInvite(user: User): ApiResponse<String>

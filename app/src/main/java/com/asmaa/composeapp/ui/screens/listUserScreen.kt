@@ -9,14 +9,13 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import com.asmaa.composeapp.model.UserData
+import com.asmaa.composeapp.model.RegisterResource
 import com.asmaa.composeapp.ui.InviteViewModel
 import androidx.compose.ui.Modifier
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.width
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 
@@ -30,7 +29,7 @@ fun ListUserScreen(inviteViewModel: InviteViewModel, navigateToNextScreen: () ->
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun UserDataLazyColumn(userData: List<UserData>) {
+fun UserDataLazyColumn(userData: List<RegisterResource>) {
     LazyColumn {
         items(userData) { user ->
             Card(

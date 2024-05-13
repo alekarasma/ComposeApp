@@ -10,11 +10,9 @@ import androidx.lifecycle.viewModelScope
 import com.asmaa.composeapp.data.ApiResponse.Failure
 import com.asmaa.composeapp.data.ApiResponse.Success
 import com.asmaa.composeapp.data.LoginRepository
-import com.asmaa.composeapp.model.RegisteredUsers
 import com.asmaa.composeapp.model.User
-import com.asmaa.composeapp.model.UserData
+import com.asmaa.composeapp.model.RegisterResource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,7 +24,7 @@ class InviteViewModel @Inject constructor(val loginRepo: LoginRepository) : View
     private val _inviteStatus: MutableLiveData<InviteStatus?> = MutableLiveData<InviteStatus?>()
     val inviteStatus: MutableLiveData<InviteStatus?> = _inviteStatus
     var userLoggedIn by mutableStateOf(false)
-    var registeredUsers :List<UserData> by mutableStateOf(listOf())
+    var registeredUsers :List<RegisterResource> by mutableStateOf(listOf())
 
     /**
      * Check if a user is already logged In
